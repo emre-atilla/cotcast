@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Opening App</title>
+
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get('page') || 'login';
+
+
+    // TEST DOMAIN (AASA BU DOMAINDE TANIMLI OLACAK)
+    // Cloudflare Pages domainini buraya yazacaksın
+    const universalLink = `https://cotcast.pages.dev/open?page=${page}`;
+
+
+    const appStoreUrl = 'https://apps.apple.com/app/id6467018143';
+    const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cotcasting';
+
+
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isAndroid = /Android/i.test(navigator.userAgent);
+
+
+    // Universal link dene
+    window.location.href = universalLink;
+
+
+    // App açılmazsa market
+    setTimeout(() => {
+      if (isIOS) window.location.href = appStoreUrl;
+      if (isAndroid) window.location.href = playStoreUrl;
+    }, 1500);
+  </script>
+</head>
+
+<body>
+  <p>Uygulama açılıyor...</p>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.cotcasting",
+      "sha256_cert_fingerprints": [
+        "EF:30:3C:41:E8:C6:D4:E5:E1:A2:FE:7E:DE:80:50:55:64:42:EE:7C:A2:7A:F8:E7:B2:02:91:12:3E:29:BF:60",
+        "97:29:4E:98:27:50:2E:D3:FB:B8:37:8D:55:27:44:E8:7E:3E:1F:9F:C9:3B:5B:1D:28:E9:DA:78:3D:BA:6B:07"
+      ]
+    }
+  }
+]
