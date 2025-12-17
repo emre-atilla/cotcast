@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotcast'e Yönlendiriliyorsunuz</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f4f4f9;
+      color: #333;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 2s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Cotcast</h2>
+    <div class="loader"></div>
+    <p id="status">Uygulama açılıyor...</p>
+  </div>
+
+  <script>
+    const appStoreUrl = 'https://apps.apple.com/app/id6467018143';
+    const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cotcasting';
+
+    function redirect() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+      const isAndroid = /android/i.test(userAgent);
+
+      // 2.5 saniye sonra hala bu sayfadaysa markete yönlendir
+      setTimeout(() => {
+        if (isIOS) {
+          window.location.replace(appStoreUrl);
+        } else if (isAndroid) {
+          window.location.replace(playStoreUrl);
+        } else {
+          document.getElementById('status').innerText = "Lütfen mobil cihazdan giriş yapın.";
+        }
+      }, 2500);
+    }
+
+    window.onload = redirect;
+  </script>
+</body>
+
+</html>
