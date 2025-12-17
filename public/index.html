@@ -73,11 +73,28 @@
   <div class="card">
     <h1>Cotcast App</h1>
 
-    <a href="/open?page=login" class="btn btn-login">Giriş Yap (Login)</a>
-    <a href="/open?page=register" class="btn btn-register">Kayıt Ol (Register)</a>
+    <button onclick="handleOpenApp('login')" class="btn btn-login">Giriş Yap (Login)</button>
+    <button onclick="handleOpenApp('register')" class="btn btn-register">Kayıt Ol (Register)</button>
 
-    <p>Eğer uygulama yüklüyse açılır,<br>değilse markete yönlendirilirsiniz.</p>
+    <p id="info-text">Eğer uygulama yüklüyse açılır,<br>değilse markete yönlendirilirsiniz.</p>
   </div>
+
+  <script>
+    function handleOpenApp(page) {
+      const customScheme = `cotcast://open?page=${page}`;
+      const fallbackUrl = `https://cotcast.pages.dev/open?page=${page}`;
+
+      // 1. Önce Custom Scheme ile uygulamayı zorla açmayı dene (Banner beklemeden direkt açar)
+      window.location.href = customScheme;
+
+      // 2. Çok kısa bir süre sonra Universal Link'e (fallback sayfasına) yönlendir
+      // Eğer uygulama açılırsa tarayıcı arka plana düşer ve bu kod çalışmayı durdurur.
+      // Eğer uygulama yoksa, kullanıcı fallback sayfasına gider ve oradaki market mantığı çalışır.
+      setTimeout(() => {
+        window.location.href = fallbackUrl;
+      }, 500);
+    }
+  </script>
 
 </body>
 
