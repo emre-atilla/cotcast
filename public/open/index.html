@@ -52,47 +52,27 @@
   </div>
 
   <script>
-    window.onload = function () {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (!isMobile) {
-        document.body.innerHTML = "Lütfen mobil cihazınızdan açın.";
-        return;
-      }
+    const appStoreUrl = 'https://apps.apple.com/app/id6467018143';
+    const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cotcasting';
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const page = urlParams.get('page') || 'login';
-      const launchAppStore = urlParams.get('launch_app_store'); // Yeni bayrağımız
+    function redirect() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+      const isAndroid = /android/i.test(userAgent);
 
-      const appStoreUrl = 'https://apps.apple.com/app/id6467018143';
-      const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cotcasting';
-      const isAndroid = /Android/i.test(navigator.userAgent);
-      const storeURL = isAndroid ? playStoreUrl : appStoreUrl;
-      const appLink = `cotcast://open?page=${page}`;
+      // 2.5 saniye sonra hala bu sayfadaysa markete yönlendir
+      setTimeout(() => {
+        if (isIOS) {
+          window.location.replace(appStoreUrl);
+        } else if (isAndroid) {
+          window.location.replace(playStoreUrl);
+        } else {
+          document.getElementById('status').innerText = "Lütfen mobil cihazdan giriş yapın.";
+        }
+      }, 2500);
+    }
 
-      // DURUM 1: Eğer linkte bayrak varsa, doğrudan markete gönder
-      if (launchAppStore === "true") {
-        setTimeout(() => {
-          window.location.href = storeURL;
-        }, 500);
-        return;
-      }
-
-      // DURUM 2: Uygulamayı açmayı dene
-      window.location.href = appLink;
-
-      // DURUM 3: Eğer uygulama 1.5 saniye içinde açılmazsa (kullanıcı hala buradaysa)
-      // Sayfayı bayrakla tekrar yükle
-      const timeout = setTimeout(() => {
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set("launch_app_store", "true");
-        window.location.replace(newUrl.toString()); // replace kullanarak geçmişi temiz tutuyoruz
-      }, 1500);
-
-      // Sayfadan ayrılırsa (uygulama açılırsa) timeout'u iptal et
-      window.onblur = function () {
-        clearTimeout(timeout);
-      };
-    };
+    window.onload = redirect;
   </script>
 </body>
 
