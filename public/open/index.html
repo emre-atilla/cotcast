@@ -66,7 +66,7 @@
       const appStoreUrl = 'https://apps.apple.com/app/id6467018143';
       const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cotcasting';
       const isAndroid = /Android/i.test(navigator.userAgent);
-      const storeURL = isAndroid ? playStoreURL : appStoreURL;
+      const storeURL = isAndroid ? playStoreUrl : appStoreUrl;
       const appLink = `cotcast://open?page=${page}`;
 
       // DURUM 1: Eğer linkte bayrak varsa, doğrudan markete gönder
